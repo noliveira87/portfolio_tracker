@@ -17,7 +17,14 @@ app.use(express.json());
 
 app.get('/api/investments', async (req, res) => {
   try {
+    // Busque os investimentos sem populate para ver o estado atual
+    const investmentsWithoutPopulate = await Investment.find();
+    console.log('Investments without populate:', investmentsWithoutPopulate);
+
+    // Use populate para buscar os investimentos com o tipo detalhado
     const investments = await Investment.find().populate('type_id');
+    console.log('Investments after populate:', investments);
+
     res.json(investments);
   } catch (error) {
     res.status(500).send(error.message);
