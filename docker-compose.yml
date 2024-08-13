@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mongo:5.0
+    container_name: mongo_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: tracker_user
+      MONGO_INITDB_ROOT_PASSWORD: securepassword
+    volumes:
+      - mongo_data:/data/db
+      - ./db/init_db.js:/docker-entrypoint-initdb.d/init_db.js:ro
+    ports:
+      - "27017:27017"
+    networks:
+      - backend-network
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DB_HOST: db
+      DB_USER: tracker_user
+      DB_PASSWORD: securepassword
+      DB_NAME: portfolio_db
+      DB_PORT: 27017
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - backend-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - backend-network
+
+volumes:
+  mongo_data:
+
+networks:
+  backend-network:

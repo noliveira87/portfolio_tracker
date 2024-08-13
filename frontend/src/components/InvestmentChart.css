@@ -1,0 +1,26 @@
+.investment-chart-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.investment-chart-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.investment-chart-container canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 400px;
+}
+
+.chart-legend {
+    text-align: right;
+}
