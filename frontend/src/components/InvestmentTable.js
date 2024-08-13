@@ -1,4 +1,3 @@
-// InvestmentTable.js
 import React from 'react';
 import './InvestmentTable.css'; // Importe o arquivo CSS
 
@@ -15,13 +14,15 @@ const InvestmentTable = ({ investments, showValues }) => {
                 </thead>
                 <tbody>
                     {investments.map((investment, index) => {
-                        const totalValue = Number(investment.totalvalue) || 0;
+                        // Assumindo que o valor total seja derivado de `yearly_evolution`
+                        const totalValue = Number(investment.yearly_evolution[0].value) || 0;
+
                         return (
                             <tr key={index}>
                                 <td>{investment.name || 'N/A'}</td>
-                                <td>{investment.type || 'N/A'}</td>
+                                <td>{investment.type_details?.type_name || 'N/A'}</td> {/* Atualizado para usar type_details.type_name */}
                                 <td>
-                                {showValues ? `${totalValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 20 })}€` : '****'}
+                                    {showValues ? `${totalValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€` : '****'}
                                 </td>
                             </tr>
                         );

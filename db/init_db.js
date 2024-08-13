@@ -36,8 +36,8 @@ investmentTypes.forEach(type => {
 
 // Inserir os investimentos com valores iniciais
 const investments = [
-  { name: 'Investment A', type_id: portfolioDB.investment_types.findOne({ type_name: 'Aforro' })._id, monthly_evolution: [{ month: new Date('2024-08-01'), value: 65319.47 }], yearly_evolution: [{ year: 2024, value: 65319.47 }] },
-  { name: 'Investment B', type_id: portfolioDB.investment_types.findOne({ type_name: 'ETFs' })._id, monthly_evolution: [{ month: new Date('2024-08-01'), value: 27141.50 }], yearly_evolution: [{ year: 2024, value: 27141.50 }] }
+  { name: 'Investment A', type_id: portfolioDB.investment_types.findOne({ type_name: 'Aforro' })._id, monthly_evolution: [{ month: new Date('2024-08-01'), value: 10000.00 }], yearly_evolution: [{ year: 2024, value: 65319.47 }] },
+  { name: 'Investment B', type_id: portfolioDB.investment_types.findOne({ type_name: 'ETFs' })._id, monthly_evolution: [{ month: new Date('2024-08-01'), value: 10000.00 }], yearly_evolution: [{ year: 2024, value: 27141.50 }] }
 ];
 
 investments.forEach(investment => {

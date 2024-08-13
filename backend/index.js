@@ -17,13 +17,19 @@ app.use(express.json());
 
 app.get('/api/investments', async (req, res) => {
   try {
-    // Busque os investimentos sem populate para ver o estado atual
-    const investmentsWithoutPopulate = await Investment.find();
-    console.log('Investments without populate:', investmentsWithoutPopulate);
-
-    // Use populate para buscar os investimentos com o tipo detalhado
-    const investments = await Investment.find().populate('type_id');
-    console.log('Investments after populate:', investments);
+    const investments = await Investment.aggregate([
+      {
+        $lookup: {
+          from: 'investment_types',       // Nome da coleção relacionada
+          localField: 'type_id',          // Campo em `investments` que referencia o `investment_types`
+          foreignField: '_id',            // Campo em `investment_types` para fazer a junção
+          as: 'type_details'              // Nome do campo onde os dados relacionados serão armazenados
+        }
+      },
+      {
+        $unwind: '$type_details'          // Garante que o campo `type_details` não seja um array, mas um objeto único
+      }
+    ]);
 
     res.json(investments);
   } catch (error) {

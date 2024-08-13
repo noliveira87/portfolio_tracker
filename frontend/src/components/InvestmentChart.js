@@ -7,9 +7,9 @@ ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 const InvestmentChart = ({ investments, showValues }) => {
     const data = {
-        labels: investments.map(inv => inv.type),
+        labels: investments.map(inv => inv.type_details.type_name), 
         datasets: [{
-            data: investments.map(inv => Number(inv.totalvalue) || 0), // Converter totalvalue para número
+            data: investments.map(inv => Number(inv.yearly_evolution[0].value) || 0),
             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         }],
     };
@@ -17,20 +17,18 @@ const InvestmentChart = ({ investments, showValues }) => {
     const options = {
         plugins: {
             legend: {
-                position: 'right', // Alinha as legendas à direita
-                align: 'center', // Centraliza as legendas verticalmente
-                labels: {
-                },
+                position: 'right',
+                align: 'center',
             },
             tooltip: {
                 enabled: showValues,
                 callbacks: {
                     label: function (tooltipItem) {
-                        const value = tooltipItem.raw.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 20 });
+                        const value = tooltipItem.raw.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                         return showValues ? `${tooltipItem.label}: ${value}€` : '';
                     }
                 }
-            }            
+            }
         },
         layout: {
             padding: {
