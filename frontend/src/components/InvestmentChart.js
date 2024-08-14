@@ -101,10 +101,16 @@ const InvestmentChart = ({ investments, showValues }) => {
 
     return (
         <div className="investment-chart-container container">
-            <h2>Distribuição do Portfólio</h2>
-            <Pie data={pieData} options={options} />
-            <h2>Evolução do Mês Atual</h2>
-            <Line data={lineData} options={options} />
+            <div className="charts-container">
+                <div className="chart">
+                    <h3>Distribuição do Portfólio</h3>
+                    <Pie data={pieData} options={options} />
+                </div>
+                <div className="chart">
+                    <h3>Evolução do Mês Atual</h3>
+                    <Line data={lineData} options={options} />
+                </div>
+            </div>
         </div>
     );
 };
