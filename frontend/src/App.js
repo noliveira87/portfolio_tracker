@@ -20,20 +20,22 @@ function App() {
     <Router>
       <div className="App">
         <div className="header">
-          <div className="menu">
+          <div className="menu-toggle-container">
+            <div className="toggle-switch">
+              <label className="switch">
+                <input 
+                  type="checkbox" 
+                  id="toggle"
+                  checked={showValues}
+                  onChange={handleToggleChange}
+                />
+                <span className="slider"></span>
+              </label>
+              <span className="toggle-label">
+                {showValues ? 'Mostrar Valores' : 'Ocultar Valores'}
+              </span>
+            </div>
             <Menu onAddInvestmentType={handleAddInvestmentType} />
-          </div>
-          <div className="toggle-switch">
-            <input 
-              type="checkbox" 
-              id="toggle"
-              checked={showValues}
-              onChange={handleToggleChange}
-            />
-            <label htmlFor="toggle" className="slider"></label>
-            <span className="toggle-label">
-              {showValues ? 'Mostrar Valores' : 'Ocultar Valores'}
-            </span>
           </div>
         </div>
         <Routes>
