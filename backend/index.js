@@ -103,31 +103,43 @@ app.post('/api/savings', async (req, res) => {
   const { type_id, amount } = req.body;
 
   try {
-    // Verificar se o tipo de investimento existe
-    const investment = await Investment.findOne({ type_id });
+    // Verificar se o investment já existe para o tipo de investimento
+    let investment = await Investment.findOne({ type_id });
+
     if (!investment) {
-      return res.status(400).send('Investimento não encontrado.');
+      // Se não existir, criar um novo investment com o tipo de investimento
+      investment = new Investment({
+        name: `Investment for ${type_id}`,
+        type_id,
+        monthly_evolution: [],
+        yearly_evolution: []
+      });
+      await investment.save();
     }
 
-    // Adicionar o valor do saving ao valor anual e mensal do investimento
-    await Investment.updateOne(
-      { type_id },
-      {
-        $inc: {
-          "yearly_evolution.$[year].value": parseFloat(amount)
-        },
-        $push: {
-          monthly_evolution: {
-            month: new Date(), // Adiciona o saving ao mês atual
-            value: parseFloat(amount)
-          }
-        }
-      },
-      {
-        arrayFilters: [{ "year.year": new Date().getFullYear() }],
-        upsert: true
-      }
-    );
+    // Data exata do dia
+    const today = new Date();
+    const month = today.getMonth() + 1; // Mês atual
+    const year = today.getFullYear(); // Ano atual
+
+    // Atualizar a evolução mensal
+    investment.monthly_evolution.push({
+      month: today, // Usa a data exata do dia
+      value: parseFloat(amount)
+    });
+
+    // Atualizar a evolução anual
+    const yearlyIndex = investment.yearly_evolution.findIndex(ye => ye.year === year);
+    if (yearlyIndex > -1) {
+      investment.yearly_evolution[yearlyIndex].value += parseFloat(amount);
+    } else {
+      investment.yearly_evolution.push({
+        year,
+        value: parseFloat(amount)
+      });
+    }
+
+    await investment.save();
 
     res.status(201).send('Saving adicionado com sucesso!');
   } catch (error) {
