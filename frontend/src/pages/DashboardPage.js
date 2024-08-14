@@ -1,44 +1,33 @@
+// DashboardPage.js
 import React, { useState, useEffect } from 'react';
 import './DashboardPage.css';
 import InvestmentTable from '../components/InvestmentTable';
 import InvestmentChart from '../components/InvestmentChart';
+import AddInvestmentType from './AddInvestmentType';
 import axios from 'axios';
 
-const DashboardPage = () => {
-    const [investments, setInvestments] = useState([]);
-    const [showValues, setShowValues] = useState(true);  // Estado para o toggle
+const DashboardPage = ({ showForm }) => {
+  const [investments, setInvestments] = useState([]);
 
-    useEffect(() => {
-        // Fetch investments data
-        axios.get('/api/investments')
-            .then(response => setInvestments(response.data))
-            .catch(error => {
-                console.error('Error fetching investments:', error);
-            });
-    }, []);
+  useEffect(() => {
+    // Fetch investments data
+    axios.get('/api/investments')
+      .then(response => setInvestments(response.data))
+      .catch(error => {
+        console.error('Error fetching investments:', error);
+      });
+  }, []);
 
-    const handleToggleChange = () => {
-        setShowValues(prev => !prev); // Alterna o estado de showValues
-    };
-
-    return (
-        <div>
-            <div className="toggle-switch">
-                <input 
-                    type="checkbox" 
-                    id="toggle"
-                    checked={showValues}
-                    onChange={handleToggleChange}
-                />
-                <label htmlFor="toggle" className="slider"></label>
-                <span className="toggle-label">
-                    {showValues ? 'Mostrar Valores' : 'Ocultar Valores'}
-                </span>
-            </div>
-            <InvestmentTable investments={investments} showValues={showValues} />
-            <InvestmentChart investments={investments} showValues={showValues} />
-        </div>
-    );
+  return (
+    <div className="dashboard-page">
+      <h1>Portfolio Tracker</h1>
+      <div className="main-content">
+        <InvestmentTable investments={investments} />
+        <InvestmentChart investments={investments} />
+        {showForm && <AddInvestmentType />}
+      </div>
+    </div>
+  );
 };
 
 export default DashboardPage;

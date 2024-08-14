@@ -15,6 +15,7 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${
 
 app.use(express.json());
 
+// Rota para obter todos os investimentos, com detalhes dos tipos de investimento
 app.get('/api/investments', async (req, res) => {
   try {
     const investments = await Investment.aggregate([
@@ -37,15 +38,54 @@ app.get('/api/investments', async (req, res) => {
   }
 });
 
+// Rota para adicionar um novo investimento
 app.post('/api/investments', async (req, res) => {
   const { name, type_name, monthly_evolution, yearly_evolution } = req.body;
   try {
     const type = await InvestmentType.findOne({ type_name });
+    if (!type) {
+      return res.status(400).send('Tipo de investimento não encontrado.');
+    }
     const newInvestment = new Investment({ name, type_id: type._id, monthly_evolution, yearly_evolution });
     await newInvestment.save();
     res.status(201).send('Investimento adicionado com sucesso!');
   } catch (error) {
     res.status(500).send(error.message);
+  }
+});
+
+// Rota para obter todos os tipos de investimento
+app.get('/api/investment_types', async (req, res) => {
+  try {
+    const types = await InvestmentType.find(); // Consulta à coleção 'investment_types'
+    res.json(types);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+// Adiciona um novo tipo de investimento
+app.post('/api/investment_types', async (req, res) => {
+  const { type_name } = req.body;
+
+  if (!type_name) {
+    return res.status(400).send('O nome do tipo de investimento é obrigatório.');
+  }
+
+  try {
+    // Verifica se o tipo de investimento já existe
+    const existingType = await InvestmentType.findOne({ type_name });
+    if (existingType) {
+      return res.status(400).send('Tipo de investimento já existe.');
+    }
+
+    // Cria um novo tipo de investimento
+    const newType = new InvestmentType({ type_name });
+    await newType.save();
+    res.status(201).send('Tipo de investimento adicionado com sucesso!');
+  } catch (error) {
+    console.error('Error adding investment type:', error);
+    res.status(500).send('Erro ao adicionar o tipo de investimento.');
   }
 });
 

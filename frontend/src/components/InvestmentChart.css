@@ -24,3 +24,8 @@
 .chart-legend {
     text-align: right;
 }
+
+canvas {
+    max-width: 100%;
+    height: auto !important;
+}

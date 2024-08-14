@@ -18,7 +18,7 @@ const investmentSchema = new mongoose.Schema({
   }]
 });
 
-const InvestmentType = mongoose.model('InvestmentType', investmentTypeSchema);
+const InvestmentType = mongoose.model('investment_types', investmentTypeSchema);
 const Investment = mongoose.model('Investment', investmentSchema);
 
 module.exports = { InvestmentType, Investment };

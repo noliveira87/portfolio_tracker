@@ -6,11 +6,19 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 const InvestmentChart = ({ investments, showValues }) => {
+    const generateColors = (numColors) => {
+        const colors = [];
+        for (let i = 0; i < numColors; i++) {
+            colors.push(`hsl(${(i * 360 / numColors)}, 70%, 50%)`);
+        }
+        return colors;
+    };
+
     const data = {
         labels: investments.map(inv => inv.type_details.type_name), 
         datasets: [{
             data: investments.map(inv => Number(inv.yearly_evolution[0].value) || 0),
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            backgroundColor: generateColors(investments.length),
         }],
     };
 
@@ -38,7 +46,7 @@ const InvestmentChart = ({ investments, showValues }) => {
     };
 
     return (
-        <div className="investment-chart-container">
+        <div className="investment-chart-container container">
             <h2>Distribuição do Portfólio</h2>
             <Pie data={data} options={options} />
         </div>

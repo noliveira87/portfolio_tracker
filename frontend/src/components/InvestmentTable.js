@@ -3,11 +3,10 @@ import './InvestmentTable.css'; // Importe o arquivo CSS
 
 const InvestmentTable = ({ investments, showValues }) => {
     return (
-        <div className="investment-table-container">
+        <div className="investment-table-container container">
             <table className="investment-table">
                 <thead>
                     <tr>
-                        <th>Nome do Investimento</th>
                         <th>Tipo de Investimento</th>
                         <th>Valor Total</th>
                     </tr>
@@ -19,7 +18,6 @@ const InvestmentTable = ({ investments, showValues }) => {
 
                         return (
                             <tr key={index}>
-                                <td>{investment.name || 'N/A'}</td>
                                 <td>{investment.type_details?.type_name || 'N/A'}</td> {/* Atualizado para usar type_details.type_name */}
                                 <td>
                                     {showValues ? `${totalValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€` : '****'}

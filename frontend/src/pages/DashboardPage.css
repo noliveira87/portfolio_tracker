@@ -1,45 +1,27 @@
-.toggle-switch {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
+/* DashboardPage.css */
 
-.toggle-switch input {
-    display: none;
-}
-
-.slider {
+.dashboard-page {
     position: relative;
-    width: 50px;
-    height: 24px;
-    background-color: #ccc;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 20px;
 }
 
-.slider::before {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    transition: transform 0.3s;
+.header {
+    display: flex;
+    flex-direction: column; /* Alinha o menu e o toggle verticalmente */
+    align-items: flex-end; /* Alinha os itens ao final do eixo horizontal */
+    gap: 10px; /* Espaço entre o menu e o toggle */
+    position: absolute; /* Para garantir que esteja posicionado corretamente no canto superior direito */
+    top: 20px;
+    right: 20px;
 }
 
-input:checked + .slider {
-    background-color: #007bff;
+.main-content {
+    margin-top: 60px; /* Ajuste conforme necessário para evitar sobreposição com o header */
 }
 
-input:checked + .slider::before {
-    transform: translateX(26px);
-}
-
-.toggle-label {
-    margin-left: 10px;
-    font-size: 16px;
-    color: #333;
+h1 {
+    color: black;
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
 }
