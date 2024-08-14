@@ -20,7 +20,9 @@ function App() {
     <Router>
       <div className="App">
         <div className="header">
-          <Menu onAddInvestmentType={handleAddInvestmentType} />
+          <div className="menu">
+            <Menu onAddInvestmentType={handleAddInvestmentType} />
+          </div>
           <div className="toggle-switch">
             <input 
               type="checkbox" 

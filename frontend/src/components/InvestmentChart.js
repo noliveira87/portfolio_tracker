@@ -8,11 +8,16 @@ ChartJS.register(Title, Tooltip, Legend, ArcElement);
 const InvestmentChart = ({ investments, showValues }) => {
     const generateColors = (numColors) => {
         const colors = [];
+        const startHue = 30; // Começa a partir de 30°, que é uma cor laranja clara.
+        const hueStep = (360 - startHue) / numColors; // Distribui as cores no restante do espectro HSL
+    
         for (let i = 0; i < numColors; i++) {
-            colors.push(`hsl(${(i * 360 / numColors)}, 70%, 50%)`);
+            const hue = (startHue + i * hueStep) % 360; // Calcula o matiz atual e garante que esteja dentro do intervalo de 0 a 360°
+            colors.push(`hsl(${hue}, 70%, 50%)`);
         }
+    
         return colors;
-    };
+    };    
 
     const data = {
         labels: investments.map(inv => inv.type_details.type_name), 
