@@ -13,7 +13,11 @@ function App() {
   };
 
   const handleAddInvestmentType = () => {
-    setShowForm(true);
+    setShowForm(true); // Abre o formulário
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false); // Fecha o formulário
   };
 
   return (
@@ -39,7 +43,10 @@ function App() {
           </div>
         </div>
         <Routes>
-          <Route path="/" element={<DashboardPage showForm={showForm} showValues={showValues} />} />
+          <Route 
+            path="/" 
+            element={<DashboardPage showForm={showForm} showValues={showValues} handleCloseForm={handleCloseForm} />} 
+          />
         </Routes>
       </div>
     </Router>

@@ -1,5 +1,6 @@
 /* AddInvestmentType.css */
 .add-investment-type-container {
+    position: relative; /* Necessário para posicionar o botão "X" no canto */
     margin: 20px 0;
     padding: 20px;
     border: 1px solid #ddd;
@@ -42,4 +43,19 @@
 
 .add-investment-type-container button:hover {
     background-color: #0056b3;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-button:hover {
+    color: red;
 }

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AddInvestmentType.css'; // Certifique-se de importar o CSS
+import './AddInvestmentType.css';
 
-const AddInvestmentType = () => {
+const AddInvestmentType = ({ onClose }) => {
     const [typeName, setTypeName] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -32,6 +32,7 @@ const AddInvestmentType = () => {
 
     return (
         <div className="add-investment-type-container">
+            <button className="close-button" onClick={onClose}>X</button>
             <h2>Tipo de Investimento</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
