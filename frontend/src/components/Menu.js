@@ -10,12 +10,11 @@ const Menu = ({ onAddInvestmentType }) => {
     return (
         <div className="menu">
             <button className="menu-button" onClick={handleMenuClick}>
-                &#9776; {/* Ícone de menu */}
+                &#9776;
             </button>
             {showMenu && (
                 <div className="menu-content">
                     <button onClick={onAddInvestmentType}>Tipo de Investimento</button>
-                    {/* Adicione outros itens de menu aqui conforme necessário */}
                 </div>
             )}
         </div>

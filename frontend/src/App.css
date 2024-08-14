@@ -3,20 +3,20 @@
 .App {
   position: relative;
   padding: 20px;
-  text-align: center;
 }
 
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Alinha os itens ao final do eixo horizontal */
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  position: relative;
+  gap: 20px; /* Espaçamento entre o menu e o toggle */
+  position: relative; /* Permite o posicionamento dos filhos */
+  margin-bottom: 20px; /* Espaço abaixo do cabeçalho */
 }
 
 .menu {
-  position: relative;
+  position: relative; /* Permite o menu se posicionar em relação ao seu contêiner pai */
+  z-index: 1000; /* Garante que o menu esteja acima de outros elementos */
 }
 
 .menu-button {
@@ -39,7 +39,7 @@
 .menu-content {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 100%; /* Posiciona o menu diretamente abaixo do botão */
   right: 0;
   background-color: #fff;
   border: 1px solid #ddd;
@@ -68,7 +68,7 @@
 .toggle-switch {
   display: flex;
   align-items: center;
-  margin-left: 20px; /* Ajuste conforme necessário */
+  z-index: 1000; /* Garante que o toggle esteja acima de outros elementos */
 }
 
 .toggle-switch input {

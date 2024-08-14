@@ -1,20 +1,19 @@
-// App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import DashboardPage from './pages/DashboardPage';
-import Menu from './components/Menu'; // Importar o componente Menu
+import Menu from './components/Menu';
 
 function App() {
-  const [showValues, setShowValues] = useState(true);  // Estado para o toggle
-  const [showForm, setShowForm] = useState(false); // Estado para mostrar o formulário
+  const [showValues, setShowValues] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   const handleToggleChange = () => {
     setShowValues(prev => !prev); // Alterna o estado de showValues
   };
 
   const handleAddInvestmentType = () => {
-    setShowForm(true); // Abre o formulário
+    setShowForm(true);
   };
 
   return (
@@ -36,7 +35,7 @@ function App() {
           </div>
         </div>
         <Routes>
-          <Route path="/" element={<DashboardPage showForm={showForm} />} />
+          <Route path="/" element={<DashboardPage showForm={showForm} showValues={showValues} />} />
         </Routes>
       </div>
     </Router>
