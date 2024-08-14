@@ -56,7 +56,12 @@ function App() {
         <Routes>
           <Route 
             path="/" 
-            element={<DashboardPage showForm={showForm} showSavingsForm={showSavingsForm} showValues={showValues} handleCloseForm={handleCloseForm} />} 
+            element={<DashboardPage 
+              showForm={showForm} 
+              showSavingsForm={showSavingsForm} 
+              showValues={showValues} 
+              handleCloseForm={handleCloseForm} 
+            />} 
           />
         </Routes>
       </div>

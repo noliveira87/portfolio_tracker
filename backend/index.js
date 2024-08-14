@@ -15,19 +15,29 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${
 app.use(express.json());
 
 // Rota para obter todos os investimentos, com detalhes dos tipos de investimento
+// Rota para obter todos os investimentos, com detalhes dos tipos de investimento
 app.get('/api/investments', async (req, res) => {
   try {
     const investments = await Investment.aggregate([
       {
         $lookup: {
-          from: 'investment_types',       // Nome da coleção relacionada
-          localField: 'type_id',          // Campo em `investments` que referencia o `investment_types`
-          foreignField: '_id',            // Campo em `investment_types` para fazer a junção
-          as: 'type_details'              // Nome do campo onde os dados relacionados serão armazenados
+          from: 'investment_types',
+          localField: 'type_id',
+          foreignField: '_id',
+          as: 'type_details'
         }
       },
       {
-        $unwind: '$type_details'          // Garante que o campo `type_details` não seja um array, mas um objeto único
+        $unwind: '$type_details'
+      },
+      {
+        $project: {
+          name: 1,
+          type_id: 1,
+          monthly_evolution: 1,
+          yearly_evolution: 1,
+          type_details: { type_name: 1 }
+        }
       }
     ]);
 
@@ -88,28 +98,41 @@ app.post('/api/investment_types', async (req, res) => {
   }
 });
 
+// Rota para adicionar um novo saving
 app.post('/api/savings', async (req, res) => {
   const { type_id, amount } = req.body;
 
-  console.log('Received data for savings:', {
-      type_id,
-      amount
-  });
-
   try {
-      // Verifica se o tipo de investimento existe
-      const type = await InvestmentType.findById(type_id);
-      if (!type) {
-          return res.status(400).send('Tipo de investimento não encontrado.');
-      }
+    // Verificar se o tipo de investimento existe
+    const investment = await Investment.findOne({ type_id });
+    if (!investment) {
+      return res.status(400).send('Investimento não encontrado.');
+    }
 
-      // Adiciona o novo saving
-      const newSaving = new Savings({ type_id, amount: parseFloat(amount) });
-      await newSaving.save();
-      res.status(201).send('Savings adicionado com sucesso!');
+    // Adicionar o valor do saving ao valor anual e mensal do investimento
+    await Investment.updateOne(
+      { type_id },
+      {
+        $inc: {
+          "yearly_evolution.$[year].value": parseFloat(amount)
+        },
+        $push: {
+          monthly_evolution: {
+            month: new Date(), // Adiciona o saving ao mês atual
+            value: parseFloat(amount)
+          }
+        }
+      },
+      {
+        arrayFilters: [{ "year.year": new Date().getFullYear() }],
+        upsert: true
+      }
+    );
+
+    res.status(201).send('Saving adicionado com sucesso!');
   } catch (error) {
-      console.error('Error adding savings:', error);
-      res.status(500).send('Erro ao adicionar savings.');
+    console.error('Error adding savings:', error);
+    res.status(500).send('Erro ao adicionar saving.');
   }
 });
 

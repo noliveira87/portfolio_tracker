@@ -1,8 +1,9 @@
+// src/pages/AddSavings.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddSavings.css';
 
-const AddSavings = ({ onClose }) => {
+const AddSavings = ({ onClose, onSuccess }) => {
     const [investmentTypes, setInvestmentTypes] = useState([]);
     const [selectedType, setSelectedType] = useState('');
     const [amount, setAmount] = useState('');
@@ -18,12 +19,13 @@ const AddSavings = ({ onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('/api/savings', { type_id: selectedType, amount })
-            .then(response => {
-                console.log('Savings added:', response.data);
+            .then(() => {
+                if (onSuccess) onSuccess();  // Notifica o sucesso
                 onClose();
             })
             .catch(error => {
                 console.error('Error adding savings:', error);
+                alert('Erro ao adicionar saving');
             });
     };
 

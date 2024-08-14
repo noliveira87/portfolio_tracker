@@ -14,11 +14,11 @@ const InvestmentTable = ({ investments, showValues }) => {
                 <tbody>
                     {investments.map((investment, index) => {
                         // Assumindo que o valor total seja derivado de `yearly_evolution`
-                        const totalValue = Number(investment.yearly_evolution[0].value) || 0;
+                        const totalValue = (investment.yearly_evolution && investment.yearly_evolution[0]?.value) || 0;
 
                         return (
                             <tr key={index}>
-                                <td>{investment.type_details?.type_name || 'N/A'}</td> {/* Atualizado para usar type_details.type_name */}
+                                <td>{investment.type_details?.type_name || 'N/A'}</td>
                                 <td>
                                     {showValues ? `${totalValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€` : '****'}
                                 </td>
