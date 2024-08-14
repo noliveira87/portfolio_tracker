@@ -5,7 +5,6 @@ const { InvestmentType, Investment } = require('./models/models');
 const app = express();
 const port = 3000;
 
-// Conectar ao MongoDB
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -40,13 +39,13 @@ app.get('/api/investments', async (req, res) => {
 
 // Rota para adicionar um novo investimento
 app.post('/api/investments', async (req, res) => {
-  const { name, type_name, monthly_evolution, yearly_evolution } = req.body;
+  const { name, type_id, monthly_evolution, yearly_evolution } = req.body;
   try {
-    const type = await InvestmentType.findOne({ type_name });
+    const type = await InvestmentType.findById(type_id);
     if (!type) {
       return res.status(400).send('Tipo de investimento não encontrado.');
     }
-    const newInvestment = new Investment({ name, type_id: type._id, monthly_evolution, yearly_evolution });
+    const newInvestment = new Investment({ name, type_id, monthly_evolution, yearly_evolution });
     await newInvestment.save();
     res.status(201).send('Investimento adicionado com sucesso!');
   } catch (error) {
@@ -86,6 +85,31 @@ app.post('/api/investment_types', async (req, res) => {
   } catch (error) {
     console.error('Error adding investment type:', error);
     res.status(500).send('Erro ao adicionar o tipo de investimento.');
+  }
+});
+
+app.post('/api/add_savings', async (req, res) => {
+  const { investment_id, monthly_evolution, yearly_evolution } = req.body;
+
+  try {
+    const investment = await Investment.findById(investment_id);
+    if (!investment) {
+      return res.status(400).send('Investimento não encontrado.');
+    }
+
+    if (monthly_evolution) {
+      investment.monthly_evolution.push(monthly_evolution);
+    }
+
+    if (yearly_evolution) {
+      investment.yearly_evolution.push(yearly_evolution);
+    }
+
+    await investment.save();
+    res.status(200).send('Valor adicionado com sucesso!');
+  } catch (error) {
+    console.error('Error adding savings:', error);
+    res.status(500).send('Erro ao adicionar valor. Verifique o console para mais detalhes.');
   }
 });
 

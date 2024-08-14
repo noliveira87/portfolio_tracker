@@ -1,15 +1,11 @@
-/* AddInvestmentType.css */
 .add-investment-type-container {
-    position: relative; /* Necessário para posicionar o botão "X" no canto */
-    margin: 20px 0;
+    max-width: 800px; /* Máxima largura do formulário para ficar alinhado com outros containers */
+    margin: 20px auto; /* Margem superior e inferior, centralizado horizontalmente */
     padding: 20px;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.add-investment-type-container h2 {
-    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombras consistentes */
+    background-color: #fff; /* Cor de fundo branca */
+    position: relative; /* Necessário para o posicionamento do botão de fechar */
 }
 
 .add-investment-type-container form {
@@ -17,16 +13,26 @@
     flex-direction: column;
 }
 
-.add-investment-type-container label {
-    margin-bottom: 10px;
-    font-weight: bold;
+.add-investment-type-container .form-group {
+    margin-bottom: 15px; /* Espaço entre os campos do formulário */
 }
 
-.add-investment-type-container input[type="text"] {
+.add-investment-type-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333; /* Cor dos rótulos */
+}
+
+.add-investment-type-container input[type="text"],
+.add-investment-type-container input[type="number"],
+.add-investment-type-container input[type="date"] {
+    width: 100%; /* Preenche a largura do container */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    color: #333; /* Cor do texto */
 }
 
 .add-investment-type-container button {
@@ -37,15 +43,15 @@
     color: white;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 10px;
     transition: background-color 0.3s;
+    margin-top: 10px;
 }
 
 .add-investment-type-container button:hover {
     background-color: #0056b3;
 }
 
-.close-button {
+.add-investment-type-container .close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -56,6 +62,6 @@
     color: #333;
 }
 
-.close-button:hover {
-    color: red;
+.add-investment-type-container .close-button:hover {
+    color: #007bff; /* Altera a cor do botão de fechar ao passar o mouse sobre ele */
 }

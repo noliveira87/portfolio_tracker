@@ -7,17 +7,20 @@ import Menu from './components/Menu';
 function App() {
   const [showValues, setShowValues] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [showSavingsForm, setShowSavingsForm] = useState(false);
 
   const handleToggleChange = () => {
-    setShowValues(prev => !prev); // Alterna o estado de showValues
+    setShowValues(prev => !prev);
   };
 
   const handleAddInvestmentType = () => {
-    setShowForm(true); // Abre o formulário
+    setShowForm(true);
+    setShowSavingsForm(false); // Esconder o formulário de Savings
   };
 
-  const handleCloseForm = () => {
-    setShowForm(false); // Fecha o formulário
+  const handleAddSavings = () => {
+    setShowSavingsForm(true);
+    setShowForm(false); // Esconder o formulário de Investment Type
   };
 
   return (
@@ -39,14 +42,14 @@ function App() {
                 {showValues ? 'Mostrar Valores' : 'Ocultar Valores'}
               </span>
             </div>
-            <Menu onAddInvestmentType={handleAddInvestmentType} />
+            <Menu 
+              onAddInvestmentType={handleAddInvestmentType} 
+              onAddSavings={handleAddSavings} 
+            />
           </div>
         </div>
         <Routes>
-          <Route 
-            path="/" 
-            element={<DashboardPage showForm={showForm} showValues={showValues} handleCloseForm={handleCloseForm} />} 
-          />
+          <Route path="/" element={<DashboardPage showForm={showForm} showSavingsForm={showSavingsForm} showValues={showValues} />} />
         </Routes>
       </div>
     </Router>

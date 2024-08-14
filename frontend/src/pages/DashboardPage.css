@@ -14,10 +14,3 @@
 .main-content {
     margin-top: 0px; /* Ajuste conforme necessário para evitar sobreposição com o header */
 }
-
-h1 {
-    color: black;
-    text-align: center;
-    margin: 0;
-    padding: 20px 0;
-}

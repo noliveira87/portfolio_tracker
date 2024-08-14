@@ -1,8 +1,7 @@
-// components/Menu.js
 import React, { useState } from 'react';
 import './Menu.css';
 
-const Menu = ({ onAddInvestmentType }) => {
+const Menu = ({ onAddInvestmentType, onAddSavings }) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const handleMenuClick = () => {
@@ -17,6 +16,7 @@ const Menu = ({ onAddInvestmentType }) => {
             {showMenu && (
                 <div className="menu-content">
                     <button onClick={onAddInvestmentType}>Tipo de Investimento</button>
+                    <button onClick={onAddSavings}>Adicionar Valor a Investimento</button> {/* Novo botão */}
                 </div>
             )}
         </div>
