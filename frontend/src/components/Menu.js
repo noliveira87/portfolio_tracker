@@ -1,4 +1,6 @@
+// components/Menu.js
 import React, { useState } from 'react';
+import './Menu.css';
 
 const Menu = ({ onAddInvestmentType }) => {
     const [showMenu, setShowMenu] = useState(false);
@@ -10,7 +12,7 @@ const Menu = ({ onAddInvestmentType }) => {
     return (
         <div className="menu">
             <button className="menu-button" onClick={handleMenuClick}>
-                &#9776;
+                <i className="fas fa-bars"></i> {/* Ícone de menu do Font Awesome */}
             </button>
             {showMenu && (
                 <div className="menu-content">

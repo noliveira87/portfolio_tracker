@@ -1,5 +1,4 @@
 /* DashboardPage.css */
-
 .dashboard-page {
     position: relative;
     padding: 20px;
@@ -10,9 +9,7 @@
     flex-direction: column; /* Alinha o menu e o toggle verticalmente */
     align-items: flex-end; /* Alinha os itens ao final do eixo horizontal */
     gap: 10px; /* Espaço entre o menu e o toggle */
-    position: absolute; /* Para garantir que esteja posicionado corretamente no canto superior direito */
-    top: 20px;
-    right: 20px;
+    position: relative; /* Permite que o menu e o toggle sejam posicionados dentro desta área */
 }
 
 .main-content {

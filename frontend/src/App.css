@@ -1,74 +1,23 @@
 /* App.css */
-
 .App {
-  position: relative;
-  padding: 20px;
+  position: relative; /* Permite que o menu e o toggle sejam posicionados em relação ao contêiner principal */
+  padding: 20px; /* Adiciona algum espaçamento ao redor da página */
 }
 
 .header {
   display: flex;
-  justify-content: flex-end; /* Alinha os itens ao final do eixo horizontal */
+  justify-content: flex-end; /* Alinha todos os itens ao final do contêiner principal */
   align-items: center;
-  gap: 20px; /* Espaçamento entre o menu e o toggle */
-  position: relative; /* Permite o posicionamento dos filhos */
-  margin-bottom: 20px; /* Espaço abaixo do cabeçalho */
-}
-
-.menu {
-  position: relative; /* Permite o menu se posicionar em relação ao seu contêiner pai */
-  z-index: 1000; /* Garante que o menu esteja acima de outros elementos */
-}
-
-.menu-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.menu-button:hover {
-  background-color: #0056b3;
-}
-
-.menu-content {
-  display: none;
-  position: absolute;
-  top: 100%; /* Posiciona o menu diretamente abaixo do botão */
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.menu-content button {
-  background: none;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-}
-
-.menu-content button:hover {
-  background-color: #f1f1f1;
-}
-
-.menu:hover .menu-content {
-  display: block;
+  gap: 20px; /* Espaço entre o toggle e o menu */
+  margin-bottom: 20px; /* Espaçamento inferior para separar do conteúdo principal */
+  position: relative; /* Necessário para o menu e o toggle serem posicionados dentro desta área */
 }
 
 .toggle-switch {
   display: flex;
   align-items: center;
-  z-index: 1000; /* Garante que o toggle esteja acima de outros elementos */
+  position: relative; /* Garante que o toggle seja posicionado corretamente dentro do header */
+  z-index: 1; /* Coloca o toggle abaixo do menu */
 }
 
 .toggle-switch input {
@@ -109,4 +58,11 @@ input:checked + .slider::before {
   margin-left: 10px;
   font-size: 16px;
   color: #333;
+}
+
+h1 {
+  color: black;
+  text-align: center;
+  margin: 0;
+  padding: 20px 0;
 }

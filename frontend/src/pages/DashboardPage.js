@@ -20,6 +20,7 @@ const DashboardPage = ({ showForm, showValues }) => {
     return (
         <div className="dashboard-page">
             <div className="main-content">
+                <h1>Portfolio Tracker</h1>
                 <InvestmentTable investments={investments} showValues={showValues} />
                 <InvestmentChart investments={investments} showValues={showValues} />
                 {showForm && <AddInvestmentType />}
