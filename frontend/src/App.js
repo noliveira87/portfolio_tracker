@@ -15,12 +15,17 @@ function App() {
 
   const handleAddInvestmentType = () => {
     setShowForm(true);
-    setShowSavingsForm(false); // Esconder o formulário de Savings
+    setShowSavingsForm(false);
   };
 
   const handleAddSavings = () => {
     setShowSavingsForm(true);
-    setShowForm(false); // Esconder o formulário de Investment Type
+    setShowForm(false);
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+    setShowSavingsForm(false);
   };
 
   return (
@@ -49,7 +54,10 @@ function App() {
           </div>
         </div>
         <Routes>
-          <Route path="/" element={<DashboardPage showForm={showForm} showSavingsForm={showSavingsForm} showValues={showValues} />} />
+          <Route 
+            path="/" 
+            element={<DashboardPage showForm={showForm} showSavingsForm={showSavingsForm} showValues={showValues} handleCloseForm={handleCloseForm} />} 
+          />
         </Routes>
       </div>
     </Router>

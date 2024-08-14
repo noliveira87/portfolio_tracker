@@ -1,35 +1,38 @@
+/* AddSavings.css */
 .add-savings-container {
-    margin: 20px auto;
+    max-width: 800px; /* Máxima largura do formulário para alinhamento */
+    margin: 20px auto; /* Margem superior e inferior, centralizado horizontalmente */
     padding: 20px;
-    border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    max-width: 500px;
-}
-
-.add-savings-container h2 {
-    text-align: center;
-    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background-color: #fff; /* Cor de fundo branca */
+    position: relative; /* Para posicionar o botão de fechar */
 }
 
 .add-savings-container form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+}
+
+.add-savings-container .form-group {
+    margin-bottom: 15px; /* Espaçamento entre campos do formulário */
 }
 
 .add-savings-container label {
-    display: flex;
-    flex-direction: column;
+    display: block;
+    margin-bottom: 5px;
     font-weight: bold;
+    color: #333; /* Cor dos rótulos */
 }
 
-.add-savings-container input[type="number"],
-.add-savings-container select {
+.add-savings-container select,
+.add-savings-container input[type="number"] {
+    width: 100%; /* Preenche a largura do container */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    color: #333; /* Cor do texto */
 }
 
 .add-savings-container button {
@@ -48,12 +51,17 @@
     background-color: #0056b3;
 }
 
-.error-message {
-    color: red;
-    font-size: 14px;
+.add-savings-container .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
 }
 
-.success-message {
-    color: green;
-    font-size: 14px;
+.add-savings-container .close-button:hover {
+    color: #007bff; /* Altera a cor do botão de fechar ao passar o mouse */
 }

@@ -3,11 +3,11 @@ import './DashboardPage.css';
 import InvestmentTable from '../components/InvestmentTable';
 import InvestmentChart from '../components/InvestmentChart';
 import AddInvestmentType from './AddInvestmentType';
+import AddSavings from './AddSavings';
 import axios from 'axios';
 
-const DashboardPage = ({ showForm, showValues, handleCloseForm }) => {
+const DashboardPage = ({ showForm, showSavingsForm, showValues, handleCloseForm }) => {
     const [investments, setInvestments] = useState([]);
-    const [formVisible, setFormVisible] = useState(showForm);
 
     useEffect(() => {
         axios.get('/api/investments')
@@ -17,17 +17,14 @@ const DashboardPage = ({ showForm, showValues, handleCloseForm }) => {
             });
     }, []);
 
-    useEffect(() => {
-        setFormVisible(showForm);
-    }, [showForm]);
-
     return (
         <div className="dashboard-page">
             <div className="main-content">
                 <h1>Portfolio Tracker</h1>
                 <InvestmentTable investments={investments} showValues={showValues} />
                 <InvestmentChart investments={investments} showValues={showValues} />
-                {formVisible && <AddInvestmentType onClose={handleCloseForm} />}
+                {showForm && <AddInvestmentType onClose={handleCloseForm} />}
+                {showSavingsForm && <AddSavings onClose={handleCloseForm} />}
             </div>
         </div>
     );
