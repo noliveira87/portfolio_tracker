@@ -14,6 +14,10 @@ if (!portfolioUserExists) {
   });
 }
 
+portfolioDB.createCollection('investment_types');
+portfolioDB.createCollection('savings');
+portfolioDB.createCollection('investments');
+
 // Inserir os tipos de investimento se não existirem
 const investmentTypes = [
   { type_name: 'Aforro' },
@@ -35,9 +39,27 @@ investmentTypes.forEach(type => {
 });
 
 // Inserir os investimentos com valores iniciais
+const investmentTypesMap = {};
+investmentTypes.forEach(type => {
+  const result = portfolioDB.investment_types.findOne({ type_name: type.type_name });
+  if (result) {
+    investmentTypesMap[type.type_name] = result._id;
+  }
+});
+
 const investments = [
-  { name: 'Investment A', type_id: portfolioDB.investment_types.findOne({ type_name: 'Aforro' })._id, monthly_evolution: [{ month: new Date('2024-08-01'), value: 10000.00 }], yearly_evolution: [{ year: 2024, value: 10000.00 }] },
-  { name: 'Investment B', type_id: portfolioDB.investment_types.findOne({ type_name: 'ETFs' })._id, monthly_evolution: [{ month: new Date('2024-08-01'), value: 10000.00 }], yearly_evolution: [{ year: 2024, value: 10000.00 }] }
+  { 
+    name: 'Investment A', 
+    type_id: investmentTypesMap['Aforro'], 
+    monthly_evolution: [{ month: new Date('2024-08-01'), value: 10000.00 }], 
+    yearly_evolution: [{ year: 2024, value: 10000.00 }] 
+  },
+  { 
+    name: 'Investment B', 
+    type_id: investmentTypesMap['ETFs'], 
+    monthly_evolution: [{ month: new Date('2024-08-01'), value: 10000.00 }], 
+    yearly_evolution: [{ year: 2024, value: 10000.00 }] 
+  }
 ];
 
 investments.forEach(investment => {

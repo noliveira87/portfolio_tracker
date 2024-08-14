@@ -1,4 +1,3 @@
-// src/pages/AddSavings.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddSavings.css';
@@ -18,8 +17,14 @@ const AddSavings = ({ onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Adiciona lógica para salvar os savings no backend
-        onClose();
+        axios.post('/api/savings', { type_id: selectedType, amount })
+            .then(response => {
+                console.log('Savings added:', response.data);
+                onClose();
+            })
+            .catch(error => {
+                console.error('Error adding savings:', error);
+            });
     };
 
     return (

@@ -18,7 +18,13 @@ const investmentSchema = new mongoose.Schema({
   }]
 });
 
-const InvestmentType = mongoose.model('investment_types', investmentTypeSchema);
+const savingsSchema = new mongoose.Schema({
+  type_id: { type: mongoose.Schema.Types.ObjectId, ref: 'investment_types', required: true },
+  amount: { type: Number, required: true }
+});
+
+const Savings = mongoose.model('Savings', savingsSchema);
+const InvestmentType = mongoose.model('investment_types', investmentTypeSchema); // Coleção 'investment_types'
 const Investment = mongoose.model('Investment', investmentSchema);
 
-module.exports = { InvestmentType, Investment };
+module.exports = { InvestmentType, Investment, Savings };
