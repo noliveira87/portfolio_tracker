@@ -1,4 +1,5 @@
 .investment-charts-container {
+    position: relative;
     display: block;
     text-align: center;
     max-width: 800px;
@@ -9,12 +10,66 @@
     background-color: #fff;
 }
 
+.add-chart-button {
+    position: absolute;
+    top: 10px; /* Ajusta a posição do botão no canto superior direito */
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: transparent; /* Remove a cor de fundo */
+    color: black; /* Cor do ícone */
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: auto;
+    z-index: 1;
+}
+
+.add-chart-button:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+.add-chart-menu {
+    position: absolute;
+    top: 40px; /* Ajusta a posição do menu abaixo do botão */
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2; /* Garante que o menu fique sobre outros elementos */
+    display: none; /* Inicialmente oculto */
+    flex-direction: column;
+}
+
+.add-chart-menu.active {
+    display: flex;
+}
+
+.add-chart-menu-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.add-chart-menu-item:last-child {
+    border-bottom: none;
+}
+
+.add-chart-menu-item:hover {
+    background-color: #f4f4f4;
+}
+
 .investment-charts-container h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .charts-container {
+    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -22,10 +77,38 @@
 }
 
 .chart {
+    position: relative;
     flex: 1;
     min-width: 300px;
     max-width: 45%;
     box-sizing: border-box;
+}
+
+.remove-chart-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: transparent; /* Remove a cor de fundo */
+    color: black; /* Cor do ícone */
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: auto;
+    z-index: 1;
+}
+
+.remove-chart-button:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+.chart h3 {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .chart canvas {
@@ -36,11 +119,6 @@
 
 .chart-legend {
     text-align: right;
-}
-
-.chart h3 {
-    text-align: center;
-    margin-bottom: 10px;
 }
 
 canvas {

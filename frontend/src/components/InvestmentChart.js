@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './InvestmentChart.css';
 import { Pie, Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, LineElement, PointElement, CategoryScale, LinearScale, BarElement } from 'chart.js';
@@ -6,16 +6,32 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, LineElement, Poin
 ChartJS.register(Title, Tooltip, Legend, ArcElement, LineElement, PointElement, CategoryScale, LinearScale, BarElement);
 
 const InvestmentChart = ({ investments, showValues }) => {
+    const [charts, setCharts] = useState([
+        { id: 'pie', type: 'pie', title: 'Portfólio Total' },
+        { id: 'line', type: 'line', title: 'Evolução Mensal' }
+    ]);
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    // Gráficos disponíveis
+    const availableCharts = [
+        { id: 'pie', type: 'pie', title: 'Portfólio Total' },
+        { id: 'line', type: 'line', title: 'Evolução Mensal' },
+        { id: 'bar', type: 'bar', title: 'Evolução Anual' }
+    ];
+
+    // Filtra os gráficos disponíveis que ainda não foram adicionados
+    const filteredCharts = availableCharts.filter(chart => !charts.find(c => c.id === chart.id));
+
     const generateColors = (numColors) => {
         const colors = [];
         const startHue = 30;
         const hueStep = (360 - startHue) / numColors;
-    
+
         for (let i = 0; i < numColors; i++) {
             const hue = (startHue + i * hueStep) % 360;
             colors.push(`hsl(${hue}, 70%, 50%)`);
         }
-    
+
         return colors;
     };
 
@@ -65,7 +81,6 @@ const InvestmentChart = ({ investments, showValues }) => {
         }],
     };
 
-    // Agregando os valores anuais dos investimentos
     const annualData = investments.flatMap(inv =>
         inv.yearly_evolution.map(evo => ({
             year: evo.year,
@@ -114,22 +129,38 @@ const InvestmentChart = ({ investments, showValues }) => {
         }
     };
 
+    const handleAddChart = (type) => {
+        const newChart = availableCharts.find(chart => chart.id === type);
+        if (newChart && !charts.find(c => c.id === newChart.id)) {
+            setCharts([...charts, newChart]);
+        }
+        setMenuOpen(false); // Fechar o menu ao adicionar um gráfico
+    };
+
+    const handleRemoveChart = (id) => {
+        setCharts(charts.filter(chart => chart.id !== id));
+    };
+
     return (
         <div className="investment-charts-container">
-            <h2>Distribuição do Portfólio</h2>
+            <div className="add-chart-button" onClick={() => setMenuOpen(!menuOpen)}>+</div>
+            <div className={`add-chart-menu ${menuOpen ? 'active' : ''}`}>
+                {filteredCharts.map(chart => (
+                    <div key={chart.id} className="add-chart-menu-item" onClick={() => handleAddChart(chart.id)}>
+                        {chart.title}
+                    </div>
+                ))}
+            </div>
             <div className="charts-container">
-                <div className="chart">
-                    <h3>Distribuição do Portfólio</h3>
-                    <Pie data={pieData} options={options} />
-                </div>
-                <div className="chart">
-                    <h3>Evolução do Mês Atual</h3>
-                    <Line data={lineData} options={options} />
-                </div>
-                <div className="chart">
-                    <h3>Total por Ano</h3>
-                    <Bar data={barData} options={options} />
-                </div>
+                {charts.map(chart => (
+                    <div key={chart.id} className="chart">
+                        <div className="remove-chart-button" onClick={() => handleRemoveChart(chart.id)}>X</div>
+                        <h3>{chart.title}</h3>
+                        {chart.type === 'pie' && <Pie data={pieData} options={options} />}
+                        {chart.type === 'line' && <Line data={lineData} options={options} />}
+                        {chart.type === 'bar' && <Bar data={barData} options={options} />}
+                    </div>
+                ))}
             </div>
         </div>
     );
