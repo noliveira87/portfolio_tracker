@@ -15,7 +15,6 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${
 app.use(express.json());
 
 // Rota para obter todos os investimentos, com detalhes dos tipos de investimento
-// Rota para obter todos os investimentos, com detalhes dos tipos de investimento
 app.get('/api/investments', async (req, res) => {
   try {
     const investments = await Investment.aggregate([
