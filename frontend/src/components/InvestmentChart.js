@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './InvestmentChart.css';
 import { Pie, Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, LineElement, PointElement, CategoryScale, LinearScale, BarElement } from 'chart.js';
@@ -12,6 +12,8 @@ const InvestmentChart = ({ investments, showValues }) => {
     ]);
     const [menuOpen, setMenuOpen] = useState(false);
 
+    const menuRef = useRef(null);
+
     // Gráficos disponíveis
     const availableCharts = [
         { id: 'pie', type: 'pie', title: 'Portfólio Total' },
@@ -21,6 +23,9 @@ const InvestmentChart = ({ investments, showValues }) => {
 
     // Filtra os gráficos disponíveis que ainda não foram adicionados
     const filteredCharts = availableCharts.filter(chart => !charts.find(c => c.id === chart.id));
+
+    // Verifica se todos os gráficos foram adicionados
+    const allChartsAdded = filteredCharts.length === 0;
 
     const generateColors = (numColors) => {
         const colors = [];
@@ -141,20 +146,42 @@ const InvestmentChart = ({ investments, showValues }) => {
         setCharts(charts.filter(chart => chart.id !== id));
     };
 
+    // Manipulador para fechar o menu quando clicar fora
+    const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setMenuOpen(false);
+        }
+    };
+
+    // Adiciona o event listener para cliques fora do menu
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <div className="investment-charts-container">
             <div className="add-chart-button" onClick={() => setMenuOpen(!menuOpen)}>+</div>
-            <div className={`add-chart-menu ${menuOpen ? 'active' : ''}`}>
-                {filteredCharts.map(chart => (
-                    <div key={chart.id} className="add-chart-menu-item" onClick={() => handleAddChart(chart.id)}>
-                        {chart.title}
-                    </div>
-                ))}
+            <div
+                className={`add-chart-menu ${menuOpen ? 'active' : ''}`}
+                ref={menuRef}
+            >
+                {allChartsAdded ? (
+                    <div className="no-charts-message">Não existem gráficos disponíveis para adicionar</div>
+                ) : (
+                    filteredCharts.map(chart => (
+                        <div key={chart.id} className="add-chart-menu-item" onClick={() => handleAddChart(chart.id)}>
+                            {chart.title}
+                        </div>
+                    ))
+                )}
             </div>
             <div className="charts-container">
                 {charts.map(chart => (
                     <div key={chart.id} className="chart">
-                        <div className="remove-chart-button" onClick={() => handleRemoveChart(chart.id)}>X</div>
+                        <div className="remove-chart-button" onClick={() => handleRemoveChart(chart.id)}>x</div>
                         <h3>{chart.title}</h3>
                         {chart.type === 'pie' && <Pie data={pieData} options={options} />}
                         {chart.type === 'line' && <Line data={lineData} options={options} />}

@@ -10,6 +10,47 @@
     background-color: #fff;
 }
 
+.investment-charts-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.charts-container {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.chart {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+    max-width: 45%;
+    box-sizing: border-box;
+}
+
+.chart h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.chart canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 400px;
+}
+
+.chart-legend {
+    text-align: right;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto !important;
+}
+
 .add-chart-button {
     position: absolute;
     top: 10px; /* Ajusta a posição do botão no canto superior direito */
@@ -63,27 +104,6 @@
     background-color: #f4f4f4;
 }
 
-.investment-charts-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.charts-container {
-    margin-top: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.chart {
-    position: relative;
-    flex: 1;
-    min-width: 300px;
-    max-width: 45%;
-    box-sizing: border-box;
-}
-
 .remove-chart-button {
     position: absolute;
     top: 10px;
@@ -106,22 +126,8 @@
     background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
 }
 
-.chart h3 {
+.no-charts-message {
+    padding: 10px;
     text-align: center;
-    margin-bottom: 10px;
-}
-
-.chart canvas {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 400px;
-}
-
-.chart-legend {
-    text-align: right;
-}
-
-canvas {
-    max-width: 100%;
-    height: auto !important;
+    color: #888;
 }
